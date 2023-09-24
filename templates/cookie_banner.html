@@ -1,0 +1,51 @@
+<div id="cookie-banner">
+    <p>This website uses cookies. By accepting, you agree to our <a href="{% url 'terms_conditions' %}">Terms & Conditions</a>, <a href="{% url 'privacy_policy' %}">Privacy Policy</a>, and <a href="{% url 'cookies_policy' %}">Cookies Policy</a>.</p>
+    <button id="accept-cookies">Accept</button>
+    <button id="decline-cookies">Decline</button>
+  </div>
+  
+  <script>
+    // JavaScript code for handling user actions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+  
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  
+    var userConsent = getCookie('cookieConsent');
+  
+    if (!userConsent) {
+      document.getElementById('cookie-banner').style.display = 'block';
+    }
+    else{
+        document.getElementById('cookie-banner').style.display = 'none';
+    }
+  
+    document.getElementById('accept-cookies').addEventListener('click', function() {
+      setCookie('cookieConsent', 'true', 365); // Set the cookie to expire in 365 days
+      document.getElementById('cookie-banner').style.display = 'none';
+      // Additional actions upon accepting cookies
+    });
+  
+    document.getElementById('decline-cookies').addEventListener('click', function() {
+      setCookie('cookieConsent', 'false', 365); // Set the cookie to expire in 365 days
+      document.getElementById('cookie-banner').style.display = 'none';
+      // Additional actions upon declining cookies
+    });
+  </script>
+  
