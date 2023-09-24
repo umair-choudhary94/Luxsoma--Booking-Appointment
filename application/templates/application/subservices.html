@@ -1,0 +1,28 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Explore Now</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        {% for obj in objects %}
+        <div class="col-md-4">
+            <a href="/services/category/info/{{obj.title}}/">
+            <div class="bg-image" style="max-width: 22rem;">
+                
+                <img src="/media/{{obj.image}}" class="w-100" />
+                <div class="mask text-light d-flex justify-content-center flex-column text-center" style="background-color: rgba(0, 0, 0, 0.5)">
+                  <h4>{{obj.title}}</h4>
+                  {% comment %} <p class="m-0">paragraph</p> {% endcomment %}
+                </div>
+              </div>
+            </a>
+        </div>
+
+{% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

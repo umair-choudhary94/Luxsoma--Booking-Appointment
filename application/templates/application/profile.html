@@ -1,0 +1,198 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Profile</h1>
+            <p></p>
+            
+{% endblock herocontent %}
+{% block content %}
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100 border">
+        <div class="col col-xl-12">
+          <div class="card shadow-0 mb-5" style="border-radius: 15px;">
+            <div class="card-body p-4">
+              <h3 class="mb-3">{{person.username}}</h3>
+              <p class="small mb-0"><i class="fas fa-envelope"></i> <span class="mx-2">|</span> Email Address :
+                <strong>{{person.email}}</strong></p>
+              <hr class="my-4">
+              <div class="text-end">
+                <a href="/book-appointment" class="btn btn-primary">Book Now</a>
+              </div>
+              <div class="table-responsive">
+                
+              <table class="table  text-nowrap">
+                <thead>
+                  <tr>
+                    <th scope="col">Service</th>
+                    <th scope="">Appointment Date</th>
+                    
+                    <th scope="">Start Time</th>
+                    <th scope="">End Time</th>
+                    <th scope="">Price</th>
+                    <th scope="">Payment Status</th>
+                    <th scope="">Completion Status</th>
+                    <th scope="">Booking Timestamp</th>
+                    <th scope="">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for app in appointments %}
+                  <tr>
+                    <th scope="row">{{app.service}}</th>
+                    <td>{{app.appointment_date}}</td>
+                   
+                    <td>{{app.start_time}}</td>
+                    <td>{{app.end_time}}</td>
+                    <td>{{app.price}}</td>
+                    <td>{{app.payment_status}}</td>
+                    <td>{{app.completion_status}}</td>
+                    <td>{{app.created_at}}</td>
+                    <td>
+                      {% if app.payment_status == 'Paid' %}
+                        <p >Completed  <i class="fas fa-circle-check text-success"></i></p>
+                      {% elif app.payment_status == 'Cancelled' %}
+                        <p>Cancelled <i class="fas fa-xmark text-danger"></i></p>
+                      {% else %}
+                        <a href="/process_payment/{{app.id}}/" class="checkout-button btn btn-sm btn-success">Pay Now</a>
+                        <a href="/cancel_appointment/{{app.id}}/" class="checkout-button btn btn-sm btn-danger">Cancel</a>
+                      {% endif %}
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</div>
+
+<script type="text/javascript">
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  // Create an instance of the Stripe object with your publishable API key
+  var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+var checkoutButtons = document.getElementsByClassName("checkout-button");
+
+Array.from(checkoutButtons).forEach(function (button) {
+button.addEventListener("click", function () {
+  console.log("yes")
+  var productId = this.getAttribute("data-product-id");
+  fetch("/create-checkout-session/" + productId + "/", {
+    method: "POST",
+    headers: {
+      'X-CSRFToken': csrftoken
+    }
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function (result) {
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+    });
+});
+});
+
+// Rest of the code remains the same...
+
+
+  // Disable the button until we have Stripe set up on the page
+  document.querySelector("button").disabled =false;
+
+  var elements = stripe.elements();
+  var style = {
+    base: {
+      color: "#32325d",
+      fontFamily: 'Arial, sans-serif',
+      fontSmoothing: "antialiased",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#32325d"
+      }
+    },
+    invalid: {
+      fontFamily: 'Arial, sans-serif',
+      color: "#fa755a",
+      iconColor: "#fa755a"
+    }
+  };
+  var card = elements.create("card", { style: style });
+  // Stripe injects an iframe into the DOM
+  card.mount("#card-element");
+  card.on("change", function (event) {
+    // Disable the Pay button if there are no card details in the Element
+    document.querySelector("button").disabled = event.empty;
+    document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+  });
+ 
+  // Calls stripe.confirmCardPayment
+  // If the card requires authentication Stripe shows a pop-up modal to
+  // prompt the user to enter authentication details without leaving your page.
+  var payWithCard = function(stripe, card, clientSecret) {
+    loading(true);
+    stripe
+      .confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card
+        }
+      })
+      .then(function(result) {
+        if (result.error) {
+          // Show error to your customer
+          showError(result.error.message);
+        } else {
+          // The payment succeeded!
+          orderComplete(result.paymentIntent.id);
+        }
+      });
+  };
+  /* ------- UI helpers ------- */
+  // Shows a success message when the payment is complete
+  var orderComplete = function(paymentIntentId) {
+    loading(false);
+    document
+      .querySelector(".result-message a")
+      .setAttribute(
+        "href",
+        "https://dashboard.stripe.com/test/payments/" + paymentIntentId
+      );
+    document.querySelector(".result-message").classList.remove("hidden");
+    document.querySelector("button").disabled = true;
+  };
+  // Show the customer the error from Stripe if their card fails to charge
+  var showError = function(errorMsgText) {
+    loading(false);
+    var errorMsg = document.querySelector("#card-error");
+    errorMsg.textContent = errorMsgText;
+    setTimeout(function() {
+      errorMsg.textContent = "";
+    }, 4000);
+  };
+  // Show a spinner on payment submission
+  var loading = function(isLoading) {
+    if (isLoading) {
+      // Disable the button and show a spinner
+      document.querySelector("button").disabled = true;
+      document.querySelector("#spinner").classList.remove("hidden");
+      document.querySelector("#button-text").classList.add("hidden");
+    } else {
+      document.querySelector("button").disabled = false;
+      document.querySelector("#spinner").classList.add("hidden");
+      document.querySelector("#button-text").classList.remove("hidden");
+    }
+  }; 
+ 
+  // Check if the user has previously given consent
+
+
+</script>
+{% endblock content %}

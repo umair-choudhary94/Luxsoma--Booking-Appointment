@@ -1,0 +1,66 @@
+{% extends 'application/basic.html' %}
+
+{% block herocontent %}
+<h1>Sign Up</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+
+{% block content %}
+
+<div class="container my-3">
+    
+    <div class="row">
+        <div class="col-md-6 col-12 mx-auto">
+        <div class="card shadow-0 border p-3">
+        <form action="" method="post">
+            {% csrf_token %}
+            <h1 class="text-center p-3 my-2 header">Sign Up Now</h1>
+
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+            <input type="text" name="username" class="form-control" />
+            <label class="form-label" for="form3Example1">User name</label>
+            </div>
+        </div>
+        
+        
+        </div>
+    
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+        <input type="email" name="email" class="form-control" />
+        <label class="form-label" for="form3Example3">Email address</label>
+        </div>
+    
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+        <input type="password" name="password" class="form-control" />
+        <label class="form-label" for="form3Example4">Password</label>
+        </div>
+        <div class="form-outline mb-4">
+            <input type="password" name="password2" class="form-control" />
+            <label class="form-label" for="form3Example4">Confirm Password</label>
+            </div>
+    
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+        <label class="form-check-label" for="form2Example33">
+            Remember Me
+        </label>
+        </div>
+    
+        <!-- Submit button -->
+        
+        <div class="col-12 text-center">
+
+            <button type="submit" class="btn btn-primary mb-4">Sign up</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

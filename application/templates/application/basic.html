@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxsoma</title>
+    <link rel="stylesheet" href="{% static 'css/modify.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}" />
+    <!-- Font Awesome -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
+    rel="stylesheet"
+    />
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      .bg {
+        /* The image used */
+        background-image: url("https://luxsomamedspa.com/wp-content/uploads/2021/12/Marina-Kay-Portraiture.jpg");
+      
+        /* Full height */
+        height: 100%;
+      
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+       /* Style the hero section */
+       .hero {
+        height: 1000px;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{% static 'img/women.jpg' %}") no-repeat center top fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: zoomIn 3s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+      }
+      
+  
+  .hero-content {
+    text-align: center;
+    color: #fff;
+  }
+  
+  .hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .hero-content p {
+    font-size: 24px;
+  }
+  @media (max-width: 768px) {
+    .hero {
+      height: 400px; /* Adjust the height as needed for mobile view */
+      background-attachment: scroll; /* Allow the background to scroll on mobile devices */
+    }
+    #visit_template{
+      height:50vh;
+    }
+    #services_container h1{
+      font-size:40px;
+    }
+    #services_container{
+      margin-top:20px;
+      margin-bottom:20px;
+    }
+    .hero-content h1{
+      font-size:30px;
+    }
+    .hero-content p{
+      font-size:18px;
+    }
+  }
+
+
+  
+  @keyframes zoomIn {
+    0% {
+      background-size: 120%;
+    }
+    10% {
+      background-size: 118%;
+    }
+    20% {
+      background-size: 116%;
+    }
+    30% {
+      background-size: 114%;
+    }
+    40% {
+      background-size: 112%;
+    }
+    50% {
+      background-size: 110%;
+    }
+    60% {
+      background-size: 108%;
+    }
+    70% {
+      background-size: 106%;
+    }
+    80% {
+      background-size: 104%;
+    }
+    90% {
+      background-size: 102%;
+    }
+    100% {
+      background-size:cover;
+    }
+  }
+  
+  
+ 
+ 
+  
+  
+  
+
+
+
+  
+    </style>
+</head>
+<body>
+  {% comment %} animation: zoomIn 3s cubic-bezier(0.42, 0, 0.58, 1) forwards; {% endcomment %}
+    {% comment %} <header>
+        <style>
+          #intro {
+            background-image: url("https://luxsomamedspa.com/wp-content/uploads/2021/12/Marina-Kay-Portraiture.jpg");
+            height: 100vh;
+          }
+  
+          /* Height for devices larger than 576px */
+          @media (min-width: 992px) {
+            #intro {
+              margin-top: -58.59px;
+            }
+          }
+          .navbar .nav-link {
+            color: #fff !important;
+          }
+        </style>
+        <!-- Navbar -->
+        <nav
+          class="navbar navbar-expand-lg navbar-dark d-none d-lg-block"
+          style="z-index: 2000"
+          id="navbar"
+        >
+          <div class="container-fluid">
+            <!-- Navbar brand -->
+            <a
+              class="navbar-brand nav-link"
+              target="_blank"
+              href="https://mdbootstrap.com/docs/standard/"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#navbarExample01"
+              aria-controls="navbarExample01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <i class="fas fa-phone-alt" id="phone_icon"></i>
+                </li>
+                <li class="nav-item">
+                  <i class="far fa-envelope-open" id="email_icon"></i>
+                </li>
+              </ul>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mid_logo">
+                <li class="nav-item">
+                  <img src="{% static 'img/logo.png' %}" alt="something went wrong" />
+                </li>
+              </ul>
+              <ul class="navbar-nav d-flex flex-row">
+                <!-- button -->
+                <button id="book_btn">Book Now</button>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Navbar -->
+        <!-- Background image -->
+        <div
+          id="intro"
+          class="bg-image shadow-2-strong"
+          id="background_image_girl"
+        >
+          <div class="mask" style="background-color: rgba(0, 0, 0, 0.442)">
+            <div
+              class="container d-flex align-items-center justify-content-center text-center h-100"
+            >
+              <div class="text-white">
+                <h1 class="mb-3" id="main_title">{% block maintitle %}
+                
+                {% endblock maintitle %}</h1>
+                {% block button_data %}
+                
+                {% endblock button_data %}
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Background image -->
+      </header> {% endcomment %}
+      
+      <div class="container">
+       
+        <nav class="navbarr" id="navbarr">
+          <a href="/"  class="navbar-brand navbar-logo" id="logo"> <img src="{% static 'img/logo.png' %}" alt="" style="width:100%;"></a>
+            <div class="navbar-options text-center">
+              <a href="/">Home</a>
+              <div class="dropdown">
+                <a href="/services" class="dropbtn">Services</a>
+                <div class="dropdown-content">
+                  {% for cat in categories %}
+                  <a href="/services/category/{{cat.title}}/">{{cat.title}}</a>
+                  {% endfor %}
+                  
+                </div>
+              </div>
+              <a href="/gallery">Gallery</a>
+              <a href="/faq">FAQ</a>
+              <a href="/contact">Contact</a>
+            </div>
+            {% comment %} <a href="/" class="navbar-buttons app-btn btn btn-warning">Book Now</a> {% endcomment %}
+            {% if request.user.is_authenticated %}
+            <div class="navbar-buttons dropdown">
+              <button
+                class="btn btn-warning btn-floating dropdown-toggle hidden-arrow "
+                type="button"
+                id="dropdownMenuButton2"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+              <i class="fas fa-user-alt text-white "></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                <li><a class="dropdown-item" href="/profile"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li>
+                {% comment %} <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Settings</a></li> {% endcomment %}
+                <li><a class="dropdown-item" href="/logout"> <i class="fas fa-door-open pe-2"></i>Logout</a></li>
+              </ul>
+            </div>
+            {% else %}
+            <div class="navbar-buttons">
+              <a href="/login" class="me-2">Login</a>
+              <a href="/register" class="">Register</a>
+            </div>
+            {% endif %}
+            <div class="navbar-hamburger text-dark">&#9776;</div>
+          </nav>
+          
+          <div class="sidebar">
+            <div class="sidebar-close text-end">&times;</div>
+            <a href="/">Home</a>
+              {% comment %} <a href="/">Contact</a>
+              <a href="/">Help</a> {% endcomment %}
+               
+              <a href="/services">Services</a>
+              <a href="/gallery">Gallery</a>
+              <a href="/faq">FAQ</a>
+              <a href="/contact">Contact</a>
+              
+            
+          </div>
+        </div>
+        <section class="hero">
+          <div class="hero-content mt-5">
+            {% block herocontent %}
+            
+            {% endblock herocontent %}
+            
+            
+          </div>
+        </section>
+        {% comment %} <div class="bg">
+          <div class="" style="height:170vh;">
+            <h1>hello</h1>
+          </div>
+          
+      </div> {% endcomment %}
+      <div style="margin-top:50px;">
+        {% block content %}
+      
+        {% endblock content %}
+      </div>
+      
+
+       <!-- footer -->
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-muted" id="footer_data">
+        <!-- Section: Social media -->
+  
+        <!-- Section: Social media -->
+  
+        <!-- Section: Links  -->
+        <section class="">
+          <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+              <!-- Grid column -->
+              <div
+                class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4"
+                id="first_index"
+              >
+                <!-- Content -->
+                <h6 class="text-uppercase fw-bold mb-4">
+                  <i class="fas fa-gem me-3"></i>About us
+                </h6>
+                <p>13052 Dallas Pkwy Suite 230, Frisco, TX 75034</p>
+                <br />
+                <p>T: +1 (214) 618-0206</p>
+              </div>
+              <!-- Grid column -->
+  
+              <!-- Grid column -->
+              <div
+                class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4"
+                id="second_index"
+              >
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Menu</h6>
+                <p>
+                  <a href="#!" class="text-reset">About Us</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Services</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">FAQ</a>
+                </p>
+                <p>
+                  <a href="#!" class="text-reset">Contact Us</a>
+                </p>
+              </div>
+              <!-- Grid column -->
+  
+              <!-- Grid column -->
+              <div
+                class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4"
+                id="third_index"
+              >
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Services</h6>
+                {% for cat in categories %}
+                <p>
+                  <a href="/services/category/{{cat.title}}/" class="text-reset">{{cat.title}}</a>
+                </p>
+                {% endfor %}
+              </div>
+              <!-- Grid column -->
+  
+              <!-- Grid column -->
+              <div
+                class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4"
+                id="fourth_index"
+              >
+                <!-- Links -->
+                <h6 class="text-uppercase fw-bold mb-4">Lega Pages</h6>
+                <p>Privacy Policy</p>
+                <p>Terms & Conditions</p>
+              </div>
+              <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+          </div>
+        </section>
+        <!-- Section: Links  -->
+  
+        <!-- Copyright -->
+        <div
+          class="text-center p-4"
+          style="background-color: rgba(0, 0, 0, 0.05)"
+          id="copy_write"
+        >
+          © 2023 Copyright:
+          <a class="text-reset fw-bold" href="https://luxsoma.com/"
+            >Luxsoma</a
+          >
+        </div>
+        <!-- Copyright -->
+      </footer>
+      <!-- Footer -->
+      <!-- MDB -->
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
+></script>
+
+<script>
+  // Toggle sidebar on hamburger click
+var navbarHamburger = document.querySelector('.navbar-hamburger');
+var sidebar = document.querySelector('.sidebar');
+var sidebarClose = document.querySelector('.sidebar-close');
+
+navbarHamburger.addEventListener('click', function() {
+sidebar.classList.toggle('show');
+});
+
+sidebarClose.addEventListener('click', function() {
+sidebar.classList.remove('show');
+});
+
+// Hide sidebar when clicking outside
+document.addEventListener('click', function(event) {
+var target = event.target;
+if (!target.closest('.navbarr') && !target.closest('.sidebar')) {
+    sidebar.classList.remove('show');
+}
+});
+
+window.addEventListener('scroll', function() {
+  const navbar = document.getElementById('navbarr');
+  if (window.scrollY > 0) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+}); 
+
+
+</script>
+
+</body>
+</html>

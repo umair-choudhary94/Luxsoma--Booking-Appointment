@@ -1,0 +1,86 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Book Now</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+{% block content %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8 col-12 mx-auto">
+            <div class="card border shadow-0 p-4">
+                <h2 class="text-center">Book Appointment</h2>
+                <form method="POST" action="{% url 'make_appointment' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="category-select" class="form-label">Select Category</label>
+                        <select id="category-select" class="form-select" aria-label="Select Category" name="category">
+                            <option selected disabled>Select Category</option>
+                            {% for obj in objects %}
+                            <option value="{{ obj.id }}">{{ obj.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="service-select" class="form-label">Select Service</label>
+                        <select id="service-select" class="form-select" aria-label="Select Service" name="service" disabled>
+                            <option selected disabled>Select Category First</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start-time" class="form-label">Start Time</label>
+                        <input type="time" id="start-time" class="form-control" name="start_time" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="end-time" class="form-label">End Time</label>
+                        <input type="time" id="end-time" class="form-control" name="end_time" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appointment-date" class="form-label">Date</label>
+                        <input type="date" id="appointment-date" class="form-control" name="appointment_date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    const servicesUrl = "{% url 'services_json' %}";  // Replace 'services_json' with your URL name
+
+    function populateServices(categoryId) {
+        const serviceSelect = document.getElementById("service-select");
+        serviceSelect.innerHTML = "<option selected disabled>Loading...</option>";
+
+        fetch(servicesUrl + "?category=" + categoryId)
+            .then(response => response.json())
+            .then(data => {
+                serviceSelect.innerHTML = "<option selected disabled>Select Service</option>";
+                data.forEach(service => {
+                    const option = document.createElement("option");
+                    option.value = service.id;
+                    const title = service.title;
+                    const price = service.price;
+                    option.text = title + (price !== null ? " - $" + price : "");  // Check if price is not null before adding it to the option text
+                    serviceSelect.appendChild(option);
+                });
+                serviceSelect.disabled = false;  // Enable service select once services are loaded
+            })
+            .catch(error => {
+                console.log(error);
+                serviceSelect.innerHTML = "<option selected disabled>Error loading services</option>";
+            });
+    }
+
+    const categorySelect = document.getElementById("category-select");
+    categorySelect.addEventListener("change", function() {
+        const selectedCategoryId = this.value;
+        populateServices(selectedCategoryId);
+    });
+</script>
+
+
+
+{% endblock content %}

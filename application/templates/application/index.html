@@ -1,0 +1,106 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Welcome to My Website</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            <div class="button_data">
+              <button class="glow-on-hover" id="call_btn" type="button">
+                Call
+                <i class="fas fa-phone" id="call_icon"></i>
+              </button>
+              <button class="glow-on-hover" id="book_btn2" type="button">
+                Book
+                <i class="fas fa-phone" id="call_icon"></i>
+              </button>
+            </div>
+
+            <script>
+              // Get the button element
+              const callBtn = document.getElementById('call_btn');
+            
+              // Add a click event listener to the button
+              callBtn.addEventListener('click', () => {
+                const phoneNumber = '1234567890'; // Replace with the desired phone number
+            
+                // Use the 'tel' protocol to open the mobile dialer with the phone number
+                window.location.href = `tel:${phoneNumber}`;
+              });
+              // Get the button element
+  const bookBtn = document.getElementById('book_btn2');
+
+  // Add a click event listener to the button
+  bookBtn.addEventListener('click', () => {
+    // Redirect to the "book-appointment" page
+    window.location.href = "/book-appointment/";
+  });
+            </script>
+{% endblock herocontent %}
+{% comment %} {% block maintitle %}
+Luxurious Med Spa in Frisco
+{% endblock maintitle %} {% endcomment %}
+{% block button_data %}
+<div class="button_data">
+  <button class="glow-on-hover" id="call_btn" type="button">
+    Call
+    <i class="fas fa-phone" id="call_icon"></i>
+  </button>
+  <button class="glow-on-hover" id="book_btn2" type="button">
+    Book
+    <i class="fas fa-phone" id="call_icon"></i>
+  </button>
+</div>
+{% endblock button_data %}
+{% block content %}
+
+<!-- Carousel wrapper -->
+ <!-- service container -->
+ <div class="container" id="services_container">
+    <h1>Service We Offer</h1>
+  </div>
+
+  <!-- service picture container -->
+  <!-- Gallery -->
+  <div class="container">
+    <div class="row mt-5">
+      {% for obj in objects %}
+      <div class="col-md-4 mt-3 shadow-2 " style="border-radius:5px;">
+          <a href="/services/category/{{obj.title}}/">
+          <div class="bg-image" style="max-width: 22rem;">
+              
+              <img src="/media/{{obj.image}}" class="w-100" style="height:50vh;" />
+              <div class="mask text-light d-flex justify-content-center flex-column text-center" style="background-color: rgba(0, 0, 0, 0.5)">
+                <h4>{{obj.title}}</h4>
+                {% comment %} <p class="m-0">paragraph</p> {% endcomment %}
+              </div>
+            </div>
+          </a>
+      </div>
+
+{% endfor %}
+  </div>
+  </div>
+
+    <!-- visit template -->
+    {% comment %} id="visit_template" {% endcomment %}
+    <div id="visit_template" >
+      <div class="container text-center text-white">
+      <div class="row p-4">
+        <div class="col-md-6">
+          <div class="">
+            <h1>Book A Visit</h1>
+            <p>
+              Visit us and experience the magic of Frisco facials and darmaplanning
+              Book an appointment today.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mt-3">
+            <button class="mt-3" id="btn-book" style="padding:18px 59px;background-color: #deb887;color:white;border-radius: 8px;">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+      </div>
+  
+{% endblock content %}

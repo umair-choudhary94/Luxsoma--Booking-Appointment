@@ -1,0 +1,20 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>{{object.0.title}}</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-2">{{object.0.title}}</h1>
+    <p class="text-dark mt-4">
+        {{object.0.description}}
+    </p>
+    <div class="d-flex justify-content-between">
+        {% comment %} <h4>Price : {{object.0.price}}$ </h4> {% endcomment %}
+        <a href="/book-appointment" class="btn btn-primary">Book Now</a>
+    </div>
+    
+</div>
+
+{% endblock content %}

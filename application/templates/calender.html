@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Calendar</title>
+    <!-- Include FullCalendar CSS and JavaScript -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+</head>
+<body>
+    <h1>Google Calendar</h1>
+    <div id="calendar"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            // Initialize the FullCalendar
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                // Configure FullCalendar options
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: [
+                    // Loop through the events data and format it for FullCalendar
+                    {% for event in events %}
+                    {
+                        title: '{{ event.summary }}',
+                        start: '{{ event.start.dateTime }}',
+                        end: '{{ event.end.dateTime }}'
+                    },
+                    {% endfor %}
+                ]
+            });
+
+            // Render the calendar
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

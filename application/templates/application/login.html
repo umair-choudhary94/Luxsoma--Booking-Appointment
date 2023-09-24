@@ -1,0 +1,64 @@
+{% extends 'application/basic.html' %}
+{% block herocontent %}
+<h1>Login</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+
+{% block content %}
+<div class="container my-5">
+    
+    <div class="row">
+        <div class="col-md-6 col-12 mx-auto">
+            <div class="card shadow-0 border p-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show text-center " role="alert" >
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <h1 class="text-center  p-3 my-5 header">Login Now</h1>
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                <input type="text" name="username" class="form-control" />
+                <label class="form-label" for="form2Example1">User name</label>
+                </div>
+            
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                <input type="password" name="password" class="form-control" />
+                <label class="form-label" for="form2Example2">Password</label>
+                </div>
+            
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value=""  checked />
+                    <label class="form-check-label" for="form2Example34"> Remember me </label>
+                    </div>
+                </div>
+            
+                {% comment %} <div class="col">
+                    <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div> {% endcomment %}
+                </div>
+            
+                <!-- Submit button -->
+                <div class="col-12 text-center">
+
+                    <button type="submit" class="btn btn-primary  mb-4">Login</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

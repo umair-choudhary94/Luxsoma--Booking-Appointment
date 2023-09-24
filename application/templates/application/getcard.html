@@ -1,0 +1,43 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Payment Information</h1>
+            <p></p>
+            
+{% endblock herocontent %}
+{% block content %}
+    <div class="row mb-5">
+        <div class="col-md-8 col-12 mx-auto ">
+            <div class="card shadow-0 border p-3 ">
+                <div class="text-center">
+                    <h3>Enter Card Details</h3>
+                </div>
+                <hr>
+                <form id="payment-form" method="POST" action="{% url 'getcard' %}">{% csrf_token %}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" id="submit-button" class="btn btn-primary">Submit</button>
+                
+                    
+                </form>
+
+                <div class="mt-2">
+                    <hr>
+                    <p>Please Read carefully all the instructions from Luxsoma</p>
+                    <ul>
+                        <li>
+                            50% of scheduled service price will be charged for cancellations less than 24 hours notice
+                        </li>
+                        <li>
+                            100% of scheduled service price will be charged for no show appointments.
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+{% endblock content %}

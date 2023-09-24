@@ -1,0 +1,27 @@
+{% extends "application/basic.html" %}
+{% block herocontent %}
+<h1>Gallery</h1>
+            <p>Learn, explore, and discover something amazing!</p>
+            
+{% endblock herocontent %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        {% for obj in objects %}
+        <div class="col-md-4">
+          <div class="card">
+            <a href="/media/{{obj.image}}" data-lightbox="image-gallery">
+                <div class="bg-image" style="max-width: 22rem;">
+                    <img src="/media/{{obj.image}}" class="w-100" style="height:40vh;" />
+                    
+                </div>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock content %}

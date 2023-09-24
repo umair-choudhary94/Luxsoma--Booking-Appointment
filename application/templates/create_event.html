@@ -1,0 +1,20 @@
+<!-- create_event.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Event</title>
+    <!-- Include any CSS styling -->
+</head>
+<body>
+    <h1>Create Event</h1>
+    <form method="POST" action="{% url 'create_event' %}">
+        {% csrf_token %}
+        <!-- Add form fields for event details -->
+        <input type="text" name="summary" placeholder="Summary" required><br>
+        <input type="text" name="description" placeholder="Description"><br>
+        <input type="datetime-local" name="start_datetime" required><br>
+        <input type="datetime-local" name="end_datetime" required><br>
+        <button type="submit">Create Event</button>
+    </form>
+</body>
+</html>
